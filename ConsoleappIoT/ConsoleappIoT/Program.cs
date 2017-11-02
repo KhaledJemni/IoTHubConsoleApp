@@ -32,6 +32,7 @@ namespace ConsoleappIoT
         //This method is responsible for sending the Event to the IoT Hub
         static async Task SendEvent()
         {
+            //This is a static message the we send to the IoT Hub once the application is launched
             string dataBuffer = "IoT in 90 Seconds";
             Microsoft.Azure.Devices.Message eventMessage = new Microsoft.Azure.Devices.Message(Encoding.ASCII.GetBytes(dataBuffer));
             await serviceClient.SendAsync("MyDevice", eventMessage);
