@@ -11,6 +11,8 @@ namespace ConsoleappIoT
 {
     class Program
     {
+        //You can get the DeviceConnectionString from your IoT Hub on the Azure Portal
+        //Click on your IoTHub, then IoTHub Owner
         private const string DeviceConnectionString = "HostName=TutorialHub.azure-devices.net;SharedAccessKeyName=iothubowner;DeviceId=MyDevice;SharedAccessKey=1tnE4rnywvZO5updbmN7J8mNcz65H7yOLxlcUYQqD2o=";
         static ServiceClient serviceClient;
 
@@ -24,18 +26,18 @@ namespace ConsoleappIoT
         {
             DeviceClient deviceClient = DeviceClient.CreateFromConnectionString(DeviceConnectionString);
             SendEvent().Wait();
-
             ReceiveCommands(deviceClient).Wait();
         }
 
+        //This method is responsible for sending the Event to the IoT Hub
         static async Task SendEvent()
         {
-            string dataBuffer;
-            dataBuffer = "IoT in 90 Seconds";
+            string dataBuffer = "IoT in 90 Seconds";
             Microsoft.Azure.Devices.Message eventMessage = new Microsoft.Azure.Devices.Message(Encoding.ASCII.GetBytes(dataBuffer));
             await serviceClient.SendAsync("MyDevice", eventMessage);
         }
 
+        //This method is responsible to receive the message on the IoT Hub
         async Task ReceiveCommands(DeviceClient deviceClient)
         {
             Console.WriteLine("\n Device waiting for IoT Hub command....\n");
